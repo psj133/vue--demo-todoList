@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .red{
+            background: red;
+        }
+        .green{
+            background: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model='content'>
+        <button @click='addItems'>+</button>
+        <ul :style="style">
+            <li v-for='(item,index) in list' :key='index':class='item.state?color1:color2'><p>{{item.content}}</p>
+                <button  @click='deleteItems(index)'>删除</button>
+                <button @click="finish(index)" v-if="!item.state">未完成</button>
+                <span v-else>已完成</span>
+            </li>   
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+               list:[{content:'今天游泳',state:false},
+               {content:'今天健身',state:false},
+               {content:'今天打球',state:false}
+               ],
+               content:'',
+               color1:{
+                   red:true
+               },
+               color2:{
+                   green:true
+               },
+               style:{
+                   listStyle:'none'
+               }
+            },
+            methods:{
+               addItems(){
+                   this.list.push({content:this.content,state:false})
+               },
+               deleteItems(index){
+                   this.list.splice(index,1)
+               },
+               finish(index){
+                   this.list[index].state=true;
+               } 
+            }
+            
+            
+               
+        })    
+    </script>
+</body>
+</html>
